@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>sözlükus >> hesap aktivasyonu</title>
+{% endblock %}
+
+{% block content %}
+  <div class="segment" id="mainsegment">
+    <div class="container">
+        <div class="introduction">
+            <h1 class="ui dividing header">
+                hesap aktivasyonu
+            </h1>
+            <p>
+               &nbsp;
+            </p>
+        </div>
+    </div>
+</div>
+  <div class="main container page" id="mainn">
+  {% if account %}
+    <p>Üye kaydınız tamamlandı, sağ üst köşedeki giriş butonunu kullanarak giriş yapabilirsiniz.</p>
+  {% else %}
+    <p>ya link bozuk yada çok geç aktivasyon yapmak istiyorsunuz. üzgünüz.</p>
+  {% endif %}
+  </div>
+{% endblock %}

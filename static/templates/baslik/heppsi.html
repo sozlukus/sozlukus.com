@@ -1,0 +1,101 @@
+<script type="text/javascript">
+function ajaxx_get_update()
+    {
+       $.get(url, function(results){
+          var menu = $("div.menu.eyceksli", results);
+          var span = $("span.step-links", results);
+
+          $('#ajax_table_result').html(menu);
+          $('.step-links').html(span);
+        }, "html");
+    }
+
+$( document ).ready( function() {
+    $( '.step-links #prev' ).click( function(e) {
+        e.preventDefault();
+        url = ($( '.step-links #prev' )[0].href);
+        ajaxx_get_update();
+    });
+    $( '.step-links #next' ).click( function(e) {
+        e.preventDefault();
+        url = ($( '.step-links #next' )[0].href);
+        ajaxx_get_update();
+
+    });
+});
+
+$( document ).ajaxStop( function() {
+    $( '.step-links #prev' ).click( function(e) {
+        e.preventDefault();
+        url = ($( '.step-links #prev' )[0].href);
+        ajaxx_get_update();
+    });
+    $( '.step-links #next' ).click( function(e) {
+        e.preventDefault();
+        url = ($( '.step-links #next' )[0].href);
+        ajaxx_get_update();
+    });
+});
+</script>
+
+
+
+<div class="item">
+    <div class="menu eyceksli" id="ajax_table_result">
+        {% for bas in bslklr %}
+        <!--
+            <script type="text/javascript">
+            function ajax_get_update()
+                {
+                   $.get(url, function(results){
+                      xx =$(results).filter("#mainsegment").html();
+                      yy =$(results).filter("#mainn").html();
+
+                      $('#mainsegment').html(xx);
+                      $('.ajaxli-main').html(yy);
+                    }, "html");
+                }
+
+            $( document ).ready( function() {
+                $('.basliklinki #baslikl{{ bas.id }}').click( function(e) {
+                    e.preventDefault();
+                    url = ($('.basliklinki #baslikl{{ bas.id }}')[0].href);
+                    ajax_get_update();
+                });
+            });
+
+            $( document ).ajaxStop( function() {
+                $('.basliklinki #baslikl{{ bas.id }}').click( function(e) {
+                    e.preventDefault();
+                    url = ($('.basliklinki #baslikl{{ bas.id }}')[0].href);
+                    ajax_get_update();
+                });
+            });
+            </script>
+        -->
+        <div class="basliklinki">
+
+              <a class="item" id="baslikl{{ bas.id }}" href="{% url 'tek_baslik' bas.title %}" style="text-transform: lowercase;">{{ bas }} {% if bas.gunentry > 0 %} ({{ bas.gunentry }}) {% endif %}</a>
+
+        </div>
+        {% endfor %}
+
+        <br>
+    </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if bslklr.has_previous %}
+            <a id="prev" href="?page={{ bslklr.previous_page_number }}"><i class="fa fa-arrow-left"></i></a>
+            {% endif %}
+
+            <span class="current" style="color:#05377E;">
+                {{ bslklr.number }} / {{ bslklr.paginator.num_pages }}
+            </span>
+
+
+            {% if bslklr.has_next %}
+            <a id="next" href="?page={{ bslklr.next_page_number }}"><i class="fa fa-arrow-right"></i></a>
+            {% endif %}
+        </span>
+    </div>
+</div>

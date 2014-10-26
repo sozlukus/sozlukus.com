@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block head %}
+<title>Şikayet</title>
+{% endblock %}
+{% block content %}
+<div class="segment">
+    <div class="container">
+        <div class="introduction">
+            {% if user.is_authenticated %}
+            <h1 class="ui dividing header">Şikayet Sayfası</h1>
+        </div>
+    </div>
+</div>
+<div class="main container page">
+    <div class="ui grid">
+        <div class="thirteen wide column">
+            <form method='POST' action='' >
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="ui form">
+                        <div class="field">
+                            <input type="text" placeholder="Entry" class="form-control" name="entry" value="" >
+                        </div>
+                        <div class="field">
+                            <textarea type="text" placeholder="Açıklama" class="form-control" name="aciklama" value="" width="500px"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <input class="ui button" type='submit' value='Gönder' style="background-color:#05377E; color: white;"/>
+            </form>
+            {% else %}
+            <h1>404</h1>
+            {% endif %}
+        </div>
+        {% if user.is_authenticated %}
+        <div class="three wide computer only column">
+            <img src="http://www.e-corlu.com/reklam/img/250x250.gif">
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

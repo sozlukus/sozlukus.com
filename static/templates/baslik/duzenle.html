@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="ui grid page">
+    <div class="two column row">
+        <div class="ten wide column">
+            <h1>{{ instance.baslik }}</h1>
+            <form method='POST' action='' >
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="ui form">
+                        <div class="field">
+                            <textarea type="text" class="form-control" name="icerik">{{instance.icerik}}</textarea>
+                        </div>
+                    </div>
+                </div>
+                <input class="ui button" type='submit' value='Gönder' style="background-color:#05377E; color: white;"/>
+            </form>
+            <br>
+        </div>
+        <div class="four wide column">
+            reklam
+        </div>
+    </div>
+</div>
+{% endblock %}

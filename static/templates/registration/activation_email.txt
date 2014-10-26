@@ -1,0 +1,11 @@
+bu mail adresiyle siz olduğunu umduğumuz biri sözlükus'a üye kaydı yaptı.
+eğer kaydı yapan sizseniz aşağıdaki linki kullanarak hesabınızı aktive edebilirsiniz.
+
+https://sozlukus.com/accounts/activate/{{ activation_key }}/
+
+aktivasyonu yapmak için {{ expiration_days }} gününüz var, eğer bu süre içerisinde aktivasyon işlemini yapmazsanız hesap silinecek.
+
+eğer kaydı siz yapmadıysanız lütfen maili yoksayın.
+
+teşekkürler
+sözlükus

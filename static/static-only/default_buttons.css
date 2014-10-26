@@ -1,0 +1,24 @@
+div.vote_buttons a.upVote{
+    color: #fff;
+}
+div.vote_buttons a.downVote{
+    color: #fff;   
+}
+div.vote_buttons a.upVote.voted{
+    color: #1ee01e;
+}
+div.vote_buttons a.downVote.voted{
+    color: red;
+}
+div.vote_buttons div.score{
+    text-align:center;
+    vertical-align:center;
+    font-size:13px;
+    font-weight:bold;
+    color:#888;
+    border-radius:2px;
+    margin:0 0;
+    padding:0 0 5px 0;
+    display:block;
+    clear:both;
+}

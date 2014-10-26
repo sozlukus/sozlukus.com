@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+{% block head %}
+<title>sözlükus >> #{{ entry.id }}</title>
+{% endblock %}
+{% block content %}
+
+{% load ttag %}
+{% load favit_tags %}
+{% load staticfiles %}
+
+<div class="segment">
+	<div class="container">
+		<div class="introduction">
+			<h1 class="ui dividing header" style="text-transform: lowercase;">
+        		{{ entry.baslik }}
+			</h1>
+			<p>
+			&nbsp;
+			</p>
+    	</div>
+ 	</div>
+</div>
+
+<div class="main container page">
+	<div class="ui stackable grid">
+		<div class="twelve wide column">
+        	<div class="ui raised segment">
+          		<p> {{ entry|linebreaks|ttags }}</p>
+				<div class="floating ui label vote_buttons" style="background-color:#05377E;" data-content="{{ entry.points }}" data-variation="inverted" data-position="right center">
+					{% if user.is_authenticated and entry not in sevilen_entryler and entry not in sevilmeyen_entryler %}
+                        <a style="color:white;" id="entry-vote-{{ entry.id }}" class="vote">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                        {% elif user.is_authenticated and entry not in sevilen_entryler and entry in sevilmeyen_entryler %}
+                        <a style="color:white;" id="entry-vote-{{ entry.id }}" class="vote">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                        {% elif user.is_authenticated and entry in sevilen_entryler and entry not in sevilmeyen_entryler %}
+                        <a style="color:#7FFF00;" id="entry-votee-{{ entry.id }}" class="votee">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                        {% else %}
+
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                        <div class="ui divider">
+                        </div>
+                        {% endif %}
+
+                        {% if user.is_authenticated and entry not in sevilmeyen_entryler and entry not in sevilen_entryler %}
+                        <a style="color:white;" id="entry-vote2-{{ entry.id }}" class="vote2">
+                            <i class="fa fa-thumbs-down"></i>
+                        </a>
+                        {% elif user.is_authenticated and entry not in sevilmeyen_entryler and entry in sevilen_entryler %}
+                        <a style="color:white;" id="entry-vote2-{{ entry.id }}" class="vote2">
+                            <i class="fa fa-thumbs-down"></i>
+                        </a>
+                        {% elif user.is_authenticated and entry in sevilmeyen_entryler and entry not in sevilen_entryler %}
+                        <a style="color:red;" id="entry-votee2-{{ entry.id }}" class="votee2">
+                            <i class="fa fa-thumbs-down"></i>
+                        </a>
+                        {% else %}
+
+                        {% endif %}
+
+					{% if user.is_authenticated %}
+					<div class="ui divider">
+					</div>
+					{% endif %}
+					<p id="entry-points-{{ entry.id }}" class="e-points-{{ entry.id }}" style="color:white;">
+					    {{ entry.points }}
+					</p>
+				</div>
+          	</div>
+
+          	<div class="ui stackable two column divided grid">
+	        	<div class="row" style="padding-top:9px;">
+	          		<div class="column">
+		          		<div class="item" style="float:left; color:#05377E;">
+		          			<i class="fa fa-user"></i> <a href="/insan/{{ entry.user }}" style="color:#05377E;">{{ entry.user }}</a>
+		          		</div>
+						<br>
+						<div class="row">
+							<p style="font-size: xx-small;">
+								#{{ entry.id }} / {{ entry.entry_time }}
+							</p>
+						</div>
+	          		</div>
+	          		<div class="column">
+						<div class="row">
+			          		<div class="small ui buttons" style="float:right;">
+			          			{% if user.is_authenticated %}
+			          			{% if user != entry.user %}
+								<a href="/messages/compose/{{ entry.user }}/">
+									<div class="ui button" style="background-color:white;">
+										<p style="color: #05377E;">
+											<i class="fa fa-envelope-o"></i>
+										</p>
+									</div>
+								</a>
+								<a href="/sikayet/">
+									<div class="ui button" style="background-color:white;">
+										<p style="color: #05377E;">
+											<i class="fa fa-warning"></i>
+										</p>
+									</div>
+								</a>
+			  					{% endif %}
+								{% if user == entry.user %}
+								<script type="text/javascript">
+								    function sil{{ entry.id }}(){
+								      $('.basic.modal.aa{{ entry.id }}')
+								  .modal('show')
+								;
+								    }
+								</script>
+								<a href="/entry/{{ entry.id }}/duzenle/">
+									<div class="ui button" style="background-color:white;">
+										<p style="color: #05377E;">
+											<i class="fa fa-pencil-square-o"></i>
+										</p>
+									</div>
+								</a>
+								<a onclick="sil{{ entry.id }}()">
+									<div class="ui button" style="background-color:white;">
+										<p style="color: #05377E;">
+											<i class="fa fa-trash-o"></i>
+										</p>
+									</div>
+								</a>
+								<div class="ui basic modal aa{{ entry.id }}">
+									<div class="header">
+      									Silme olaylari <i class="fa fa-trash-o"></i>
+    								</div>
+    								<div class="content">
+      									<div class="left">
+      									</div>
+      									<br>
+      									<div class="right">
+        									<p><b>{{ baslik }}</b> başlığında bulunan <b>#{{ entry.id }}</b> numaralı entrynizi silmek istediğinize emin misiniz?</p>
+      									</div>
+    								</div>
+    								<div class="actions">
+      									<div class="two fluid ui buttons">
+        									<a>
+												<div class="ui positive labeled icon button">
+          											<i class="icon fa fa-check"></i>
+          											Hayır
+        										</div>
+											</a>
+        									<a style="color: white;" href="/delete/{{ entry.id }}/">
+												<div class="ui negative right labeled icon button">
+          											Evet
+          											<i class="icon fa fa-times"></i>
+        										</div>
+											</a>
+      									</div>
+    								</div>
+								</div>
+								{% endif %}
+								{% endif %}
+								<script type="text/javascript">
+								    function paylas{{ entry.id }}(){
+								      $('.small.modal.pp{{ entry.id }}')
+								  .modal('show')
+								;
+								    }
+							    </script>
+								<div class="ui button" style="background-color:white;">
+									<a onclick="paylas{{ entry.id }}()">
+										<p style="color: #05377E;">
+											<i class="fa fa-share-alt"></i>
+										</p>
+									</a>
+								</div>
+								<div class="ui small modal pp{{ entry.id }}">
+  									<div class="content">
+    									<div class="center">
+											<div>#{{ entry.id }}</div>
+ 											<div>
+												<a href="http://www.facebook.com/sharer/sharer.php?u=http://munhasir.com/entry/{{ entry.id }}" target="_blank">
+													<i class="fa fa-facebook"></i> Facebook'da paylaş
+												</a>
+											</div>
+ 											<div>
+												<a href="http://twitter.com/intent/tweet?text=http://munhasir.com/entry/{{ entry.id }} @malisit aracılığıyla" target="_blank">
+													<i class="fa fa-twitter"></i> Twitle
+												</a>
+											</div>
+ 											<div>
+ 												<h3>Sadece link:</h3>
+ 												http://munhasir.com/entry/{{ entry.id }}
+ 											</div>
+											<div class="actions">
+												<div class="two fluid ui buttons">
+													<div class="ui negative button">
+														Kapat
+													</div>
+												</div>
+											</div>
+    									</div>
+  									</div>
+								</div>
+							</div>
+							<div class="row">
+								{% favorite_button entry %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+  		<div class="three wide computer only column">
+			<img src="{% static 'resim/250.gif' %}">
+  		</div>
+	</div>
+</div>
+<div class="ui divider"></div>
+{% endblock %}

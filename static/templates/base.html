@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="image_src" type="image/jpeg" href="images/share.png" />
+    {% block head %}
+    <title>SU | sözlükus</title>
+    {% endblock head %}
+
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    {% load staticfiles %}
+    <script src="{% static 'js/jquery-min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/favit.js' %}"></script>
+    <script>
+    $(document).ready(function() {
+
+    function vote2 (entryID) {
+        $("#entry-vote2-" + entryID).unbind("click");
+        $.ajax({
+            type: "POST",
+            url: "/vote2/",
+            data: {"entry": entryID},
+            success: function() {
+                $("#entry-vote2-" + entryID).css({"color": " red "});
+                $("#entry-votee-" + entryID).css({"color": " white "});
+                $("#entry-points-" + entryID).load("  .e-points-" + entryID);
+            }
+        });
+        return false;
+    }
+
+    $("a.vote2").click(function() {
+        var entryID =  parseInt(this.id.split("-")[2]);
+        return vote2(entryID);
+    })
+
+    });
+
+    </script>
+
+    <script>
+    $(document).ready(function() {
+
+    function vote (entryID) {
+        $("#entry-vote-" + entryID).unbind("click");
+        $.ajax({
+            type: "POST",
+            url: "/vote/",
+            data: {"entry": entryID},
+            success: function() {
+                $("#entry-vote-" + entryID).css({"color": " #7FFF00 "});
+                $("#entry-votee2-" + entryID).css({"color": " white "});
+                $("#entry-points-" + entryID).load("  .e-points-" + entryID);
+            }
+        });
+        return false;
+    }
+
+    $("a.vote").click(function() {
+        var entryID =  parseInt(this.id.split("-")[2]);
+        return vote(entryID);
+    })
+
+    });
+
+    </script>
+
+
+    <script>
+
+    </script>
+    <script>
+    $(document).ready(function(){
+        $( "input#n" ).autocomplete({
+                            source: "{% url "autoco" %}",
+                            minLength: 2,
+                            select:function(e,ui) {
+      location.href = ui.item.the_link;
+    //  console.log(ui.item.the_link);
+    }
+        });
+    });
+    </script>
+
+    <link rel="stylesheet" type="text/css" class="ui" href="{% static 'css/semantic-min.css' %}">
+    <link rel="stylesheet" type="text/css" class="ui" href="{% static 'css/semantic.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/1.css' %}">
+
+
+    <script src="{% static 'js/semantic/semantic.min.js' %}"></script>
+
+
+    <script src="{% static 'js/scroll.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/scroll.css' %}">
+    <style>
+        @font-face {
+    font-family: "Icons";
+    src: url("{% static 'font/icons.woff' %}") format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+    </style>
+    <script type="text/javascript">
+        function at(){
+            $('.basic.modal.giris')
+            .modal('show')
+            ;
+            }
+    </script>
+
+
+
+    <script type="text/javascript">
+    // using jQuery
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    function sameOrigin(url) {
+        // test that a given url is a same-origin URL
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+        // or any other URL that isn't scheme relative or absolute i.e relative.
+        !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                // Send the token to same-origin, relative URLs only.
+                // Send the token only if the method warrants CSRF protection
+                // Using the CSRFToken value acquired earlier
+                var csrftoken = getCookie('csrftoken');
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-55884168-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body id="example" class="index" ontouchstart="">
+    {% load ttag %}
+    {% load inbox %}
+    {% load favit_tags %}
+<a style="color:white;" onclick="sidebarmenu()">
+    <div class="ui black launch right attached button" style="background-color:#05377E;">
+        <i class="icon list layout"></i>
+        <span class="text"></span>
+    </div>
+</a>
+    <script>
+        function sidebarmenu(){
+        $('.vertical.sidebar')
+  .sidebar('toggle')
+;
+        }
+    </script>
+    <script>
+    (function($){
+        $(window).load(function(){
+            $(".content").mCustomScrollbar({
+               autoHideScrollbar:true,
+         theme:"minimal-dark"
+               });
+        });
+    })(jQuery);
+    </script>
+    <div class="ui large vertical inverted labeled icon sidebar menu mCustomScrollbar" id="menu" style="background-color:#05377E; width:90%;">
+        <a class="hide item" onclick="sidebarmenu()">
+            <center><i class="close icon"></i></center>
+        </a>
+
+    {% hepsi request %}
+    </div>
+
+    <div class="ui fixed transparent inverted main menu" style="background-color:#05377E;">
+        <div class="container">
+            <a class="launch item" onclick="sidebarmenu()"><i class="icon list layout"></i></a>
+            <div class="title item">
+                <a href="/"><b>SU</b> | sözlük<b>us</b></a>
+            </div>
+            <script>
+    $(document).ready(function(){
+        $( "input#n" ).autocomplete({
+            source: "{% url 'autoco' %}",
+            minLength: 2,
+            select:function(e,ui) {
+      location.href = ui.item.the_link;
+    //  console.log(ui.item.the_link);
+    }
+        });
+    });
+    </script>
+            <div class="vertically fitted borderless item" style="padding-top:7px;">
+                <form class="ui icon input" role="form">
+                    <div class="ui-widget">
+                        <input id="n" type="text" name="n"/>
+
+                    </div>
+                    <i class="search link icon"></i>
+                    <input type="submit" placeholder="arama" style="position: absolute; left: -9999px"/>
+                </form>
+            </div>
+
+            <script type="text/javascript">
+              // if "change" doesn't work then maybe "keyup"?
+              document.getElementById("n").addEventListener("change", function(){
+                this.form.setAttribute("action", "/baslik/" + this.value);
+              });
+            </script>
+
+
+
+                {% if user.is_authenticated %}
+                <script>
+                    function mesajlar(){$('.ui.dropdown')
+                  .dropdown()
+                    ;
+                    }
+                </script>
+                <div class="section ui dropdown link item">
+                    {% inbox_count as mesajsayi %}
+                    <a onclick="mesajlar()"><span class="count">Mesajlar {% ifequal mesajsayi 0 %}{% else %}<div class="ui circular red label">{% inbox_count %}</div>{% endifequal %}</span></a>
+                    <div class="menu">
+                        <a href="/messages/compose">
+                            <div class="active item">
+                                Yeni Yaz
+                            </div>
+                        </a>
+                        <a href="/messages">
+                            <div class="item">
+                                Gelen Kutusu {% ifequal mesajsayi 0 %}{% else %}<div class="ui circular red label">{% inbox_count %}</div>{% endifequal %}
+                            </div>
+                        </a>
+                        <a href="/messages/outbox">
+                            <div class="item">
+                                Giden Kutusu
+                            </div>
+                        </a>
+                        <a href="/messages/trash">
+                            <div class="item">
+                                Çöp
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="/insan/{{ user }}" class="item"><i class="fa fa-user"></i> {{ user }}&nbsp;</a>
+                <a href="/accounts/logout/" class="blue item"><i class="fa fa-sign-out"></i> Çıkış</a>
+                {% else %}
+                <a href="/accounts/register/" class="blue item"><i class="fa fa-users"></i> Üye Ol</a>
+                <a onclick="at()" class="blue item"><i class="fa fa-sign-in"></i> Giriş</a>
+                {% endif %}
+
+        </div>
+        <div class="ui basic modal giris">
+            <div class="ui stackable grid" style="text-align: center">
+
+<div class="ui six wide column">
+            <form role="form" id="login_form" method="post">
+                {% csrf_token %}
+                <div class="ui form segment">
+                    <div class="field">
+                        <label>Kullanıcı Adı</label>
+                        <div class="ui left labeled icon input">
+                            <input type="text" name="username" value="" placeholder="Kullanıcı Adı">
+                            <i class="user icon"></i>
+                            <div class="ui corner label">
+                                <i class="icon asterisk"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Şifre</label>
+                        <div class="ui left labeled icon input">
+                            <input type="password" placeholder="Şifre" class="form-control" name="password" value="" >
+                            <i class="lock icon"></i>
+                            <div class="ui corner label">
+                                <i class="icon asterisk"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui error message">
+                        <div class="header">Sıkıntı oldu.</div>
+                    </div>
+                    <button type="submit" class="ui blue submit button">  Giriş </button> <a href="/accounts/password/reset/" style="color:black;">şifremi unuttum?</a>
+                </div>
+                veya
+                <a href="/accounts/register"><button class="ui green submit button">  Kaydolun </button></a>
+            </form></div></div>
+        </div>
+
+    </div>
+
+
+
+    {% block content %}
+
+
+    <div class="segment">
+        <div class="container">
+            <div class="introduction">
+                <h1 class="ui dividing header">
+                    <a style="color: inherit; text-transform: lowercase;" href="/baslik/{{ rast.baslik }}">{{ rast.baslik }}</a>
+                </h1>
+                <p>
+                    &nbsp;
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="main container page">
+        {% csrf_token %}
+        <div class="ui stackable grid">
+            <div class="twelve wide column">
+                <a style="color: black;" href="{% url "tek_entry" rast.id %}" class="item">
+                    <div class="ui raised segment">
+                        <p> {{ rast|linebreaks|ttags }}</p>
+                        <div class="floating ui label vote_buttons" style="background-color:#05377E;" data-content="{{ rast.points }}" data-variation="inverted" data-position="right center">
+                        {% if user.is_authenticated and rast not in sevilen_entryler and rast not in sevilmeyen_entryler %}
+                        <a style="color:white;" id="entry-vote-{{ rast.id }}" class="vote">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                        {% elif user.is_authenticated and rast not in sevilen_entryler and rast in sevilmeyen_entryler %}
+                        <a style="color:white;" id="entry-vote-{{ rast.id }}" class="vote">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                        {% elif user.is_authenticated and rast in sevilen_entryler and rast not in sevilmeyen_entryler %}
+                        <a style="color:#7FFF00;" id="entry-votee-{{ rast.id }}" class="votee">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                        {% else %}
+
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                        <div class="ui divider">
+                        </div>
+                        {% endif %}
+
+                        {% if user.is_authenticated and rast not in sevilmeyen_entryler and rast not in sevilen_entryler %}
+                        <a style="color:white;" id="entry-vote2-{{ rast.id }}" class="vote2">
+                            <i class="fa fa-thumbs-down"></i>
+                        </a>
+                        {% elif user.is_authenticated and rast not in sevilmeyen_entryler and rast in sevilen_entryler %}
+                        <a style="color:white;" id="entry-vote2-{{ rast.id }}" class="vote2">
+                            <i class="fa fa-thumbs-down"></i>
+                        </a>
+                        {% elif user.is_authenticated and rast in sevilmeyen_entryler and rast not in sevilen_entryler %}
+                        <a style="color:red;" id="entry-votee2-{{ rast.id }}" class="votee2">
+                            <i class="fa fa-thumbs-down"></i>
+                        </a>
+                        {% else %}
+
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                        <div class="ui divider">
+                        </div>
+                        {% endif %}
+                        <p id="entry-points-{{ rast.id }}" class="points" style="color:white;">
+                            {{ rast.points }}
+                        </p>
+                    </div>
+                    </div>
+                </a>
+                <div class="ui two column stackable divided grid">
+                    <div class="row" style="padding-top:9px;">
+                        <div class="column">
+                            <div class="item" style="float:left; color:#05377E;">
+                                <i class="fa fa-user"></i>
+                                <a href="/insan/{{ rast.user }}" style="color:#05377E;">{{ rast.user }}</a>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <p style="font-size: xx-small;">
+                                    #{{ rast.id }} / {{ rast.entry_time }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="row">
+                                <div class="small ui buttons" style="float:right;">
+                                    {% if user.is_authenticated %}
+                                    {% if user != rast.user %}
+                                    <a href="/messages/compose/{{ rast.user }}/">
+                                        <div class="ui button" style="background-color:white;">
+                                            <p style="color: #05377E;">
+                                                <i class="fa fa-envelope-o"></i>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <a href="/sikayet/">
+                                        <div class="ui button" style="background-color:white;">
+                                            <p style="color: #05377E;">
+                                                <i class="fa fa-warning"></i>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    {% endif %}
+                                    {% if user == rast.user %}
+                                    <script type="text/javascript">
+                                        function sil{{ rast.id }}(){
+                                          $('.basic.modal.aa{{ rast.id }}')
+                                      .modal('show')
+                                    ;
+                                        }
+                                    </script>
+                                    <a href="/entry/{{ rast.id }}/duzenle/">
+                                        <div class="ui button" style="background-color:white;">
+                                            <p style="color: #05377E;">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <a onclick="sil{{ rast.id }}()">
+                                        <div class="ui button" style="background-color:white;">
+                                            <p style="color: #05377E;">
+                                                <i class="fa fa-trash-o"></i>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <div class="ui basic modal aa{{ rast.id }}">
+                                        <div class="header">
+                                            Silme olaylari <i class="fa fa-trash-o"></i>
+                                        </div>
+                                        <div class="content">
+                                            <div class="left">
+                                            </div>
+                                            <br>
+                                            <div class="right">
+                                                <p>
+                                                    <b>{{ rast.baslik }}</b> başlığında bulunan <b>#{{ rast.id }}</b> numaralı entrynizi silmek istediğinize emin misiniz?
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="actions">
+                                            <div class="two fluid ui buttons">
+                                                <a>
+                                                    <div class="ui positive labeled icon button">
+                                                        <i class="icon fa fa-check"></i>
+                                                        Hayır
+                                                    </div>
+                                                </a>
+                                                <a style="color: white;" href="/delete/{{ rast.id }}/">
+                                                    <div class="ui negative right labeled icon button">
+                                                        Evet
+                                                        <i class="icon fa fa-times"></i>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
+                                    <script type="text/javascript">
+                                        function paylas{{ rast.id }}(){
+                                          $('.small.modal.pp{{ rast.id }}')
+                                      .modal('show')
+                                    ;
+                                        }
+                                    </script>
+                                    <a onclick="paylas{{ rast.id }}()">
+                                        <div class="ui button" style="background-color:white;">
+                                            <p style="color: #05377E;">
+                                                <i class="fa fa-share-alt"></i>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <div class="ui small modal pp{{ rast.id }}">
+                                        <div class="content">
+                                            <div class="center">
+                                                <div>#{{ rast.id }}</div>
+                                                <div>
+                                                    <a href="http://www.facebook.com/sharer/sharer.php?u=http://munhasir.com/entry/{{ rast.id }}" target="_blank">
+                                                        <i class="fa fa-facebook"></i> Facebook'da paylaş
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a href="http://twitter.com/intent/tweet?text=http://munhasir.com/entry/{{ rast.id }} @malisit aracılığıyla" target="_blank">
+                                                        <i class="fa fa-twitter"></i> Twitle
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <h3>Sadece link:</h3>
+                                                    http://munhasir.com/entry/{{ rast.id }}
+                                                </div>
+                                                <div class="actions">
+                                                    <div class="two fluid ui buttons">
+                                                        <div class="ui negative button">
+                                                            Kapat
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    {% favorite_button rast %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="three wide computer only column">
+                <img src="{% static 'resim/250.gif' %}">
+            </div>
+        </div>
+    </div>
+
+    <div class="ui divider"></div>
+    {% endblock %}
+
+
+    <div class="ui divided horizontal footer link list">
+        <div class="item">sözlükus.com 2014</div>
+        <div class="item">
+            iyi orta gol getirir
+        </div>
+    </div>
+    <script>
+        $( document ).ready(function() {
+    $('.vertical.sidebar')
+  .sidebar('toggle')
+;
+});
+    </script>
+</body>
+</html>

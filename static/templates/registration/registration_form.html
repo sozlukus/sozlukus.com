@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="segment" id="mainsegment">
+    <div class="container">
+        <div class="introduction">
+            <h1 class="ui dividing header">
+                kayıt sayfası
+            </h1>
+            <p>
+               &nbsp;
+            </p>
+        </div>
+    </div>
+</div>
+<div class="main container page" id="mainn">
+    <div class="ui grid" style="text-align: center">
+
+<div class="ui six wide column">
+        {% if registered %}
+        Kaydolduğunuz için teşekkür ederiz.
+        <a href="/">Return to the homepage.</a><br/>
+        {% else %}
+
+
+
+        <form role="form" id="RegistrationForm" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+            <div class="ui form segment">
+            <div class="field">
+    <label>Kullanıcı Adı</label>
+    <div class="ui left labeled icon input">
+      <input type="text" placeholder="Kullanıcı Adı" class="form-control" name="username" value="" >
+      <i class="user icon"></i>
+      <div class="ui corner label">
+        <i class="icon asterisk"></i>
+      </div>
+    </div>
+
+  </div>
+            {% if form.username.errors %}
+<div class="ui red pointing above ui label">{{ form.username.errors.as_text }}</div>
+{% endif %}
+
+
+  <div class="field">
+    <label>Email</label>
+    <div class="ui left labeled icon input">
+      <input type="text" placeholder="Email" class="form-control" name="email" value="" >
+      <i class="mail icon"></i>
+      <div class="ui corner label">
+        <i class="icon asterisk"></i>
+      </div>
+    </div>
+    {% if form.email.errors %}
+
+                <div class="ui red pointing above ui label">{{ form.email.errors.as_text }}</div>
+            {% endif %}
+  </div>
+
+
+            <div class="field">
+    <label>Şifre</label>
+    <div class="ui left labeled icon input">
+      <input type="password" placeholder="Şifre" class="form-control" name="password1" value="" >
+      <i class="lock icon"></i>
+      <div class="ui corner label">
+        <i class="icon asterisk"></i>
+      </div>
+    </div>
+    {% if form.password1.errors %}
+<div class="ui red pointing above ui label">{{ form.password1.errors.as_text }}</div>
+{% endif %}
+  </div>
+
+
+<div class="field">
+    <label>Şifre(Tekrar)</label>
+    <div class="ui left labeled icon input">
+      <input type="password" placeholder="Şifre(Tekrar)" class="form-control" name="password2" value="" >
+      <i class="lock icon"></i>
+      <div class="ui corner label">
+        <i class="icon asterisk"></i>
+      </div>
+    </div>
+    {% if form.password2.errors %}
+<div class="ui red pointing above ui label">{{ form.password1.errors.as_text }}</div>
+{% endif %}
+  </div>
+
+            <br>
+       <button type="submit" class="ui blue submit button">  Kaydet </button>
+       </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
+    </div>
+{% endblock %}

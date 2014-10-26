@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<center>
+        <div class=row style='width:400px;'>
+        <form role="form" id="login_form" method="post">
+            {% csrf_token %}
+            <div class="ui form segment">
+  <div class="field">
+    <label>Kullanıcı Adı</label>
+    <div class="ui left labeled icon input">
+      <input type="text" name="username" value="" placeholder="Kullanıcı Adı">
+      <i class="user icon"></i>
+      <div class="ui corner label">
+        <i class="icon asterisk"></i>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label>Şifre</label>
+    <div class="ui left labeled icon input">
+      <input type="password" placeholder="Şifre" class="form-control" name="password" value="" >
+      <i class="lock icon"></i>
+      <div class="ui corner label">
+        <i class="icon asterisk"></i>
+      </div>
+    </div>
+  </div>
+  <div class="ui error message">
+    <div class="header">We noticed some issues</div>
+  </div>
+  <button type="submit" class="ui blue submit button">  Giriş </button>
+</div>
+            
+        </form>
+        </div>
+</center>
+{% endblock %}

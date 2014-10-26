@@ -1,0 +1,10 @@
+README
+Python2/_regex.c
+Python2/_regex_core.py
+Python2/_regex_unicode.c
+Python2/regex.py
+Python2/test_regex.py
+Python2/regex.egg-info/PKG-INFO
+Python2/regex.egg-info/SOURCES.txt
+Python2/regex.egg-info/dependency_links.txt
+Python2/regex.egg-info/top_level.txt

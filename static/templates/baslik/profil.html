@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block head %}
+<title>sozluksu >> {{ kullanici }}</title>
+{% endblock %}
+{% block content %}
+<div class="segment">
+    <div class="container">
+        <div class="introduction">
+            <h1 class="ui dividing header">
+                {{ kullanici }}
+            </h1>
+            {% if user.is_authenticated %}
+            {% if user != entry.user %}
+            <div class="small ui buttons">
+                <div class="ui button" style="background-color:white;">
+                    <a href="/messages/compose/{{ kullanici }}/">
+                        <p style="color: #05377E;">
+                            <i class="fa fa-envelope-o"></i>
+                        </p>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="main container page">
+    {% load favit_tags %}
+    {% csrf_token %}
+    <div class="ui grid">
+        <div class="thirteen wide column">
+            <div class="ui list">
+                <div class="item">
+                    <div class="content">
+                        <div class="header ui">
+                            <p style="color:#05377E;">
+                                <i class="fa fa-heart"></i> gönül verdiği entryler
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="ui list">
+                        {% user_favorites kullanici "baslik.Entry" as favorite_list %}
+                        {% for fav_obj in favorite_list %}
+                        {% with fav_obj.target.id as entid %}
+                        {% if fav_obj.target != None %}
+                        <li class="item">
+                            <a style="color: black;" href="{% url "tek_entry" entid %}" class="item">
+                                {{ fav_obj.target.baslik }}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endwith %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="three wide computer only column">
+            <img src="http://www.e-corlu.com/reklam/img/250x250.gif">
+        </div>
+    </div>
+</div>
+{% endblock %}
