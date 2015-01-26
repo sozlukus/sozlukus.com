@@ -22,6 +22,7 @@ from django.contrib.auth.views import *
 from django.contrib.auth.models import *
 from registration.backends.default.views import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from favit.models import Favorite
 
 @login_required
 def deleteent(request, id):
@@ -75,15 +76,15 @@ def baslik_handle(request, title):
     form2 = EntryForm(request.POST or None)
     entryler2 = Entry.objects.filter(baslik=baslik).order_by('timestamp')
 
-    paginator = Paginator(entryler2, 10)
+    paginatora = Paginator(entryler2, 10)
 
     page = request.GET.get('page')
     try:
-        sayfalar = paginator.page(page)
+        sayfalar = paginatora.page(page)
     except PageNotAnInteger:
-        sayfalar = paginator.page(1)
+        sayfalar = paginatora.page(1)
     except EmptyPage:
-        sayfalar = paginator.page(paginator.num_pages)
+        sayfalar = paginatora.page(paginatora.num_pages)
 
     kacentry = len(entryler2)
 
@@ -167,6 +168,26 @@ def regcomp(request):
 def profiller(request, username):
     login(request, template_name='base.html')
     kullanici = get_object_or_404(User, username=username)
+    gonul = Favorite.objects.for_model(Entry)
+    list_gnl = []
+    for a in gonul:
+        x = a.target
+        if x not in list_gnl:
+            list_gnl.append(x)
+
+
+
+    entys = Entry.objects.filter(user=kullanici).order_by('-timestamp')
+    paginator = Paginator(entys, 15)
+    page = request.GET.get('entrysayfa')
+    try:
+        entryler = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        entryler = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        entryler = paginator.page(paginator.num_pages)
     return render_to_response("baslik/profil.html", locals(), context_instance=RequestContext(request))
 
 @login_required
