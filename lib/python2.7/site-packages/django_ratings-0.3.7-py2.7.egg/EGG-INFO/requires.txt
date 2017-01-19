@@ -1,4 +1,0 @@
-django
-
-[test]
-django

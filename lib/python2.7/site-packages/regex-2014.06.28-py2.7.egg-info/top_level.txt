@@ -1,4 +1,0 @@
-regex
-_regex_core
-_regex
-test_regex
