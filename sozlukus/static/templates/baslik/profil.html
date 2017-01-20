@@ -36,7 +36,7 @@
                     {% ifequal kullanici request.user %}
                     <a href="/accounts/password/change/">şifreni değiştir</a><br><br>
                     {% endifequal %}
-                    {% user_favorites kullanici "baslik.Entry" as favorite_list %}
+                    {% user_favorites kullanici "sozluk.Entry" as favorite_list %}
                     {% if favorite_list %}
                     <div class="content">
                         <div class="header ui">
@@ -53,7 +53,7 @@
                         {% if fav_obj.target != None %}
                         <li>
                             <a style="color: black;" href="{% url "tek_entry" entid %}" class="item">
-                                <p>{{ fav_obj.target.baslik }}/{{ fav_obj.target.numara }}</p>
+                                <p>{{ fav_obj.target.baslik.title }}/{{ fav_obj.target.numara }}</p>
                             </a>
                         </li>
                         {% endif %}
@@ -73,7 +73,7 @@
                             {% ifequal a.user kullanici %}
                             <li>
                                 <a style="color: black;" href="{% url "tek_entry" a.id %}" class="item">
-                                    <p>{{ a.baslik }}/{{ a.numara }}</p>
+                                    <p>{{ a.baslik.title }}/{{ a.numara }}</p>
                                 </a>
                                 {% endifequal %}
                                 {% endfor %}
@@ -93,7 +93,7 @@
 
                                 <li>
                                     <a style="color: black;" href="{% url "tek_entry" ent.id %}" class="item">
-                                        <p>{{ ent.baslik }}/{{ ent.numara }}</p>
+                                        <p>{{ ent.baslik.title }}/{{ ent.numara }}</p>
                                     </a>
                                 </li>
                                 {% endfor %}

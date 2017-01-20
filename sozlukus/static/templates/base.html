@@ -337,7 +337,7 @@
         <div class="container">
             <div class="introduction">
                 <h1 class="ui dividing header">
-                    <a style="color: inherit; text-transform: lowercase;" href="/baslik/{{ rast.baslik }}">{{ rast.baslik }}</a>
+                    <a style="color: inherit; text-transform: lowercase;" href="/baslik/{{ rast.baslik }}">{{ rast.baslik.title }}</a>
                 </h1>
                 <p>
                     &nbsp;
@@ -351,7 +351,7 @@
             <div class="twelve wide column">
                 <a style="color: black;" href="{% url "tek_entry" rast.id %}" class="item">
                     <div class="ui raised segment">
-                        <p> {{ rast|linebreaks|ttags }}</p>
+                        <p> {{ rast.icerik|linebreaks|ttags }}</p>
                         <div class="floating ui label vote_buttons" style="background-color:#05377E;" data-content="{{ rast.points }}" data-variation="inverted" data-position="right center">
                         {% if user.is_authenticated and rast not in sevilen_entryler and rast not in sevilmeyen_entryler %}
                         <a style="color:white;" id="entry-vote-{{ rast.id }}" class="vote">
@@ -442,6 +442,7 @@
                                     ;
                                         }
                                     </script>
+                                    {% favorite_button rast %}
                                     <a href="/entry/{{ rast.id }}/duzenle/">
                                         <div class="ui button" style="background-color:white;">
                                             <p style="color: #05377E;">
@@ -533,7 +534,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    {% favorite_button rast %}
+                                    
                                 </div>
                             </div>
                         </div>

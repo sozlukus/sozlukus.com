@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.apps import AppConfig
+from django.apps import apps
 
 
 def _get_content_type_and_obj(obj, model=None):
     if isinstance(model, str):
-        model = AppConfig.get_model(*model.split("."))
+        model = apps.get_model(*model.split("."))
 
     if isinstance(obj, (int, int)):
         obj = model.objects.get(pk=obj)
@@ -41,7 +41,7 @@ class FavoriteManager(models.Manager):
 
         if model:
             if isinstance(model, str):
-                model = AppConfig.get_model(*model.split("."))
+                model = apps.get_model(*model.split("."))
 
             content_type = ContentType.objects.get_for_model(model)
             qs = qs.filter(target_content_type=content_type)
@@ -62,7 +62,7 @@ class FavoriteManager(models.Manager):
 
         # if model is an app_label.model string make it a Model class
         if isinstance(model, str):
-            model = AppConfig.get_model(*model.split("."))
+            model = apps.get_model(*model.split("."))
 
         content_type = ContentType.objects.get_for_model(model)
 
