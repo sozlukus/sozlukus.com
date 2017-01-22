@@ -1,6 +1,8 @@
-<div class="ui button favit" style="background-color:white;">
-  <a class="btn favorite" href="{% url 'add_or_remove' %}" model="{{ target_model }}" id="target_{{ target_object_id }}" style="color: red;">
-    <i class="fa fa-heart{% if not undo %}-empty{% endif %}"></i>
-  </a>
-  <span class="fav-count">{{ fav_count }}</span>
+<a class="btn favorite" model="{{ target_model }}" id="target_{{ target_object_id }}" style="color: red;">
+<div class="ui button favit" style="background-color:white;color:red;">
+  
+    <i class="favorite-{{ target_object_id }} fa fa-heart{% if not undo %}-o{% endif %}"></i>
+  
+  <span class="fav-count-{{ target_object_id }}">{{ fav_count }}</span>
 </div>
+</a>

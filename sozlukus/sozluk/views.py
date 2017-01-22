@@ -1,38 +1,27 @@
-from django.shortcuts import render
 from itertools import chain
 from datetime import *
-from django.template import defaultfilters
-from django.db.models import Q
-from django.shortcuts import render_to_response, Http404, HttpResponseRedirect
-from django.template import RequestContext
+from django.shortcuts import render_to_response, Http404, HttpResponseRedirect, render, HttpResponse, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
 import json as simplejson
-from django.views.generic import View
-from django.http import HttpResponse
 from .models import Baslik, Entry, Sikayet
 from .forms import BaslikForm, EntryForm, EntryForm2, SikayetForm
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
-from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.views import *
-from django.contrib.auth.models import *
 from registration.backends.default.views import *
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from favit.models import Favorite
 
 @login_required
-def deleteent(request, id):
+def deleteEntry(request, id):
     delent = get_object_or_404(Entry, pk=id)
     if delent.user == request.user:
         delennt = get_object_or_404(Entry, pk=id).delete()
     else:
         raise Http404
-    return HttpResponseRedirect(reverse('baslik.views.hepsi'))
+    return HttpResponseRedirect(reverse('sozluk.views.indexPage'))
 
-def hepsi(request):
+def indexPage(request):
     login(request, template_name='base.html')
     rast = Entry.objects.order_by('?')[0]
     if request.user.is_authenticated():
@@ -46,17 +35,17 @@ def hepsi(request):
     return render(request, "base.html", cta)
 
 
-def autoco(request):
+def autoComplete(request):
     term = request.GET.get('term')
-    bslk = Baslik.objects.filter(title__istartswith=term)
-    res = []
-    for b in bslk:
+    titlesStartWith = Baslik.objects.filter(title__istartswith=term)
+    result = []
+    for b in titlesStartWith:
          dict = {'id':b.id, 'label':b.__unicode__(), 'value':b.__unicode__(), 'the_link':"/baslik/"+b.__unicode__()}
-         res.append(dict)
-    return HttpResponse(simplejson.dumps(res))
+         result.append(dict)
+    return HttpResponse(simplejson.dumps(result))
 
 
-def tekent(request, id):
+def singleEntry(request, id):
     login(request, template_name='base.html')
     entry = get_object_or_404(Entry, id=id)
     if request.user.is_authenticated():
@@ -69,7 +58,7 @@ def tekent(request, id):
     return render(request, "baslik/tekentry.html", {'entry': entry, 'sevilen_entryler': sevilen_entryler, 'sevilmeyen_entryler': sevilmeyen_entryler})
 
 
-def baslik_handle(request, title):
+def title(request, title):
     login(request, template_name='base.html')
     baslik, created = Baslik.objects.get_or_create(title=title, gunentry=0)
     form2 = EntryForm(request.POST or None)
@@ -116,7 +105,7 @@ def baslik_handle(request, title):
     ctx = {'baslik': baslik, 'form2': form2, 'kacentry': kacentry, 'entryler2':entryler2, 'sayfalar':sayfalar, 'sevilen_entryler': sevilen_entryler, 'sevilmeyen_entryler': sevilmeyen_entryler}
     return render(request, "baslik/tek.html", ctx)
 
-def duzenle(request, id):
+def editEntry(request, id):
     instance = Entry.objects.get(id=id)
     if request.user == instance.user:
         form = EntryForm2(request.POST or None, instance=instance)
@@ -136,7 +125,7 @@ def duzenle(request, id):
 
 
 @login_required
-def sikayet(request):
+def reportEntry(request):
     login(request, template_name='base.html')
     form = SikayetForm(request.POST or None)
 
@@ -150,21 +139,21 @@ def sikayet(request):
     return render(request, "baslik/sikayet.html", locals())
 
 @login_required
-def sikayet_basarili(request):
+def reportSuccess(request):
     login(request, template_name='base.html')
     return render(request, "baslik/sikayet2.html", locals())
 
-def accomp(request):
+def activationComplete(request):
     login(request, template_name='base.html')
     return render(request, "registration/activation_complete.html", locals())
 
 
-def regcomp(request):
+def registrationComplete(request):
     login(request, template_name='base.html')
     return render(request, "registration/registration_complete.html", locals())
 
 
-def profiller(request, username):
+def profile(request, username):
     login(request, template_name='base.html')
     kullanici = get_object_or_404(User, username=username)
     gonul = Favorite.objects.for_model(Entry)
@@ -173,8 +162,6 @@ def profiller(request, username):
         x = a.target
         if x not in list_gnl:
             list_gnl.append(x)
-
-
 
     entys = Entry.objects.filter(user=kullanici).order_by('-timestamp')
     paginator = Paginator(entys, 15)
@@ -190,7 +177,7 @@ def profiller(request, username):
     return render(request, "baslik/profil.html", locals())
 
 @login_required
-def vote(request):
+def voteUp(request):
     entry = get_object_or_404(Entry, pk=request.POST.get('entry'))
     user = request.user
     xlist = request.user.sevilmeyen_entryler.filter(id__in=[entry.id])
@@ -208,7 +195,7 @@ def vote(request):
     return HttpResponse()
 
 @login_required
-def vote2(request):
+def voteDown(request):
     entry = get_object_or_404(Entry, pk=request.POST.get('entry'))
     user = request.user
     xlist = request.user.sevilen_entryler.filter(id__in=[entry.id])

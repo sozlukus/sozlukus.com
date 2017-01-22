@@ -76,7 +76,7 @@
     <script>
     $(document).ready(function(){
         $( "input#n" ).autocomplete({
-                            source: "{% url "autoco" %}",
+                            source: "{% url "autoComplete" %}",
                             minLength: 2,
                             select:function(e,ui) {
       location.href = ui.item.the_link;
@@ -96,15 +96,7 @@
 
     <script src="{% static 'js/scroll.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'css/scroll.css' %}">
-    <style>
-        @font-face {
-    font-family: "Icons";
-    src: url("{% static 'font/icons.woff' %}") format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
 
-    </style>
     <script type="text/javascript">
         function at(){
             $('.basic.modal.giris')
@@ -162,16 +154,7 @@
         }
     });
     </script>
-    <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-55884168-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
 </head>
 
 <body id="example" class="index" ontouchstart="">
@@ -218,7 +201,7 @@
             <script>
     $(document).ready(function(){
         $( "input#n" ).autocomplete({
-            source: "{% url 'autoco' %}",
+            source: "{% url 'autoComplete' %}",
             minLength: 2,
             select:function(e,ui) {
       location.href = ui.item.the_link;
@@ -349,7 +332,7 @@
         {% csrf_token %}
         <div class="ui stackable grid">
             <div class="twelve wide column">
-                <a style="color: black;" href="{% url "tek_entry" rast.id %}" class="item">
+                <a style="color: black;" href="{% url "singleEntry" rast.id %}" class="item">
                     <div class="ui raised segment">
                         <p> {{ rast.icerik|linebreaks|ttags }}</p>
                         <div class="floating ui label vote_buttons" style="background-color:#05377E;" data-content="{{ rast.points }}" data-variation="inverted" data-position="right center">
@@ -418,6 +401,7 @@
                             <div class="row">
                                 <div class="small ui buttons" style="float:right;">
                                     {% if user.is_authenticated %}
+                                    {% favorite_button rast %}
                                     {% if user != rast.user %}
                                     <a href="/messages/compose/{{ rast.user }}/">
                                         <div class="ui button" style="background-color:white;">
@@ -442,7 +426,7 @@
                                     ;
                                         }
                                     </script>
-                                    {% favorite_button rast %}
+                                    
                                     <a href="/entry/{{ rast.id }}/duzenle/">
                                         <div class="ui button" style="background-color:white;">
                                             <p style="color: #05377E;">
@@ -542,7 +526,7 @@
                 </div>
             </div>
             <div class="three wide computer only column">
-                <img src="{% static 'resim/250.gif' %}">
+                <!-- ads? -->
             </div>
         </div>
     </div>

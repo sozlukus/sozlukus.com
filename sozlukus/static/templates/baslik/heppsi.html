@@ -75,7 +75,7 @@ $( document ).ajaxStop( function() {
         -->
         <div class="basliklinki">
 
-              <a class="item" id="baslikl{{ bas.id }}" href="{% url 'tek_baslik' bas.title %}" style="text-transform: lowercase;">{{ bas.title }} {% if bas.gunentry > 0 %} ({{ bas.gunentry }}) {% endif %}</a>
+              <a class="item" id="baslikl{{ bas.id }}" href="{% url 'title' bas.title %}" style="text-transform: lowercase;">{{ bas.title }} {% if bas.gunentry > 0 %} ({{ bas.gunentry }}) {% endif %}</a>
 
         </div>
         {% endfor %}

@@ -1,9 +1,12 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
+**.py[cod]
+
+# sqlite
+**.sqlite3
 
 # C extensions
-*.so
+**.so
 
 # Distribution / packaging
 bin/
@@ -16,9 +19,9 @@ lib64/
 parts/
 sdist/
 var/
-*.egg-info/
+**.egg-info/
 .installed.cfg
-*.egg
+**.egg
 
 # Installer logs
 pip-log.txt

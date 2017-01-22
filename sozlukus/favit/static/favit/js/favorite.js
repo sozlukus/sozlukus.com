@@ -4,7 +4,7 @@ $(document).ready(function() {
       var target_id = $obj.attr('id').split('_')[1];
       $obj.prop('disabled', true);
       $.ajax({
-      url: $obj.attr('href'),
+      url: '/favit/add-or-remove',
       type: 'POST',
       data: {target_model: $obj.attr('model'),
              target_object_id: target_id},

@@ -34,11 +34,9 @@ def add_or_remove(request):
         'status': status,
         'fav_count': Favorite.objects.for_object(obj_id, app_model).count()
     }
-
-    return HttpResponse(
-        json.dumps(response, ensure_ascii=False),
-        mimetype='application/json'
-    )
+    favc=Favorite.objects.for_object(obj_id, app_model).count()
+    print(status)
+    return HttpResponse(status+"|"+str(favc))
 
 
 @login_required

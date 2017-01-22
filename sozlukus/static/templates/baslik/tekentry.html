@@ -25,7 +25,7 @@
 	<div class="ui stackable grid">
 		<div class="twelve wide column">
         	<div class="ui raised segment">
-          		<p> {{ entry|linebreaks|ttags }}</p>
+          		<p> {{ entry.icerik|linebreaks|ttags }}</p>
 				<div class="floating ui label vote_buttons" style="background-color:#05377E;" data-content="{{ entry.points }}" data-variation="inverted" data-position="right center">
 					{% if user.is_authenticated and entry not in sevilen_entryler and entry not in sevilmeyen_entryler %}
                         <a style="color:white;" id="entry-vote-{{ entry.id }}" class="vote">
@@ -91,6 +91,7 @@
 						<div class="row">
 			          		<div class="small ui buttons" style="float:right;">
 			          			{% if user.is_authenticated %}
+			          			{% favorite_button entry %}
 			          			{% if user != entry.user %}
 								<a href="/messages/compose/{{ entry.user }}/">
 									<div class="ui button" style="background-color:white;">
@@ -115,6 +116,7 @@
 								;
 								    }
 								</script>
+								
 								<a href="/entry/{{ entry.id }}/duzenle/">
 									<div class="ui button" style="background-color:white;">
 										<p style="color: #05377E;">
@@ -204,7 +206,7 @@
 								</div>
 							</div>
 							<div class="row">
-								{% favorite_button entry %}
+								
 							</div>
 						</div>
 					</div>
@@ -212,7 +214,7 @@
 			</div>
 		</div>
   		<div class="three wide computer only column">
-			<img src="{% static 'resim/250.gif' %}">
+			<!-- ads? -->
   		</div>
 	</div>
 </div>

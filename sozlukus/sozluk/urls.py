@@ -9,6 +9,5 @@ admin.autodiscover()
 
 
 urlpatterns = [
-    url(r'^$', views.hepsi, name = "hepsiliste"),
-    url(r'^(?P<title>.*)/$', views.baslik_handle, name = "tek_baslik"),
+    url(r'^(?P<title>.*)/$', views.title, name = "title"),
 ]
