@@ -86,7 +86,7 @@ def title(request, title):
         entry.duzen = datetime.now()
         entry.user = request.user
         entry.save()
-        return redirect('tek_entry', id=entry.id)
+        return redirect('singleEntry', id=entry.id)
 
     n=1
 
@@ -114,7 +114,7 @@ def editEntry(request, id):
             entry_edit = form.save(commit=False)
             entry_edit.duzen = entry_edit.updated
             entry_edit.save()
-            return redirect('tek_entry', id=entry_edit.id)
+            return redirect('singleEntry', id=entry_edit.id)
 
 
         return render(request, "baslik/duzenle.html", locals())
