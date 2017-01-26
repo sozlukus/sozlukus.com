@@ -18,6 +18,7 @@ from django.contrib import admin
 from sozluk import views as sozlukViews
 from django.conf.urls.static import static
 from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     url(r'^$', sozlukViews.indexPage, name = "indexPage"),
@@ -37,4 +38,4 @@ urlpatterns = [
     url(r'^vote/$', sozlukViews.voteUp),
     url(r'^vote2/$', sozlukViews.voteDown),
     url(r'^favit/', include('favit.urls')),
-]
+] + staticfiles_urlpatterns()
