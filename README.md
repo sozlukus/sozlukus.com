@@ -1,6 +1,6 @@
 ### First Use
 
-```Other than usual Django first run procedure, run the following before the first use of this project.```
+Other than usual Django first run procedure, run the following before the first use of this project.
 
 ```
 from django.contrib.sites.models import Site
